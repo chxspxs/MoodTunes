@@ -1,0 +1,132 @@
+<!-- moodtunes.html -->
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MoodTunes</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #222;
+      color: #eee;
+      text-align: center;
+      padding: 2rem;
+    }
+    h1 {
+      color: #4CAF50;
+    }
+    .emoji-btn {
+      font-size: 3rem;
+      margin: 1rem;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .emoji-btn:hover {
+      transform: scale(1.3);
+    }
+    #playlist {
+      margin-top: 2rem;
+    }
+    a {
+      color: #4CAF50;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+    button {
+      margin-top: 1.5rem;
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>MoodTunes 🎵</h1>
+  <p>Elige tu estado de ánimo:</p>
+
+  <div id="emojis">
+    <span class="emoji-btn" data-mood="feliz">😊</span>
+    <span class="emoji-btn" data-mood="triste">😢</span>
+    <span class="emoji-btn" data-mood="relajado">😌</span>
+    <span class="emoji-btn" data-mood="energetico">⚡</span>
+    <span class="emoji-btn" data-mood="melancolico">🌧️</span>
+  </div>
+
+  <div id="playlist"></div>
+
+  <button id="reset-btn" style="display:none;">Cambiar estado de ánimo</button>
+
+  <script>
+    const playlists = {
+      feliz: [
+        {name: "Happy - Pharrell Williams", url: "https://www.youtube.com/watch?v=ZbZSe6N_BXs"},
+        {name: "Can't Stop the Feeling - Justin Timberlake", url: "https://www.youtube.com/watch?v=ru0K8uYEZWw"},
+        {name: "Walking on Sunshine - Katrina & The Waves", url: "https://www.youtube.com/watch?v=iPUmE-tne5U"}
+      ],
+      triste: [
+        {name: "Someone Like You - Adele", url: "https://www.youtube.com/watch?v=hLQl3WQQoQ0"},
+        {name: "Fix You - Coldplay", url: "https://www.youtube.com/watch?v=k4V3Mo61fJM"},
+        {name: "Stay With Me - Sam Smith", url: "https://www.youtube.com/watch?v=pB-5XG-DbAA"}
+      ],
+      relajado: [
+        {name: "Weightless - Marconi Union", url: "https://www.youtube.com/watch?v=UfcAVejslrU"},
+        {name: "Breathe Me - Sia", url: "https://www.youtube.com/watch?v=hSH7fblcGWM"},
+        {name: "River Flows In You - Yiruma", url: "https://www.youtube.com/watch?v=7maJOI3QMu0"}
+      ],
+      energetico: [
+        {name: "Eye of the Tiger - Survivor", url: "https://www.youtube.com/watch?v=btPJPFnesV4"},
+        {name: "Don't Stop Me Now - Queen", url: "https://www.youtube.com/watch?v=HgzGwKwLmgM"},
+        {name: "Uptown Funk - Mark Ronson ft. Bruno Mars", url: "https://www.youtube.com/watch?v=OPf0YbXqDm0"}
+      ],
+      melancolico: [
+        {name: "The Night We Met - Lord Huron", url: "https://www.youtube.com/watch?v=KtlgYxa6BMU"},
+        {name: "Creep - Radiohead", url: "https://www.youtube.com/watch?v=XFkzRNyygfk"},
+        {name: "Lost Cause - Beck", url: "https://www.youtube.com/watch?v=EzrmQ3aZX7E"}
+      ]
+    };
+
+    const emojis = document.querySelectorAll(".emoji-btn");
+    const playlistDiv = document.getElementById("playlist");
+    const resetBtn = document.getElementById("reset-btn");
+
+    emojis.forEach(emoji => {
+      emoji.addEventListener("click", () => {
+        const mood = emoji.dataset.mood;
+        mostrarPlaylist(mood);
+        emojis.forEach(e => e.style.display = "none");
+        resetBtn.style.display = "inline-block";
+      });
+    });
+
+    resetBtn.addEventListener("click", () => {
+      playlistDiv.innerHTML = "";
+      emojis.forEach(e => e.style.display = "inline-block");
+      resetBtn.style.display = "none";
+    });
+
+    function mostrarPlaylist(mood) {
+      const lista = playlists[mood];
+      let html = `<h2>Playlist para estar ${mood}:</h2><ul>`;
+      lista.forEach(cancion => {
+        html += `<li><a href="${cancion.url}" target="_blank" rel="noopener noreferrer">${cancion.name}</a></li>`;
+      });
+      html += "</ul>";
+      playlistDiv.innerHTML = html;
+    }
+  </script>
+
+</body>
+</html>
+
